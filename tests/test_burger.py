@@ -184,3 +184,87 @@ cat >> tests/test_burger.py << EOF
         
         # Проверка
         assert burger.bun is None
+    
+    def test_get_receipt_formats_correctly(self, burger_with_ingredients):
+        """Тест формирования чека"""
+        # Шаги теста
+        burger_with_ingredients.bun.get_name.return_value = "Test Bun"
+        
+        sauce_mock = burger_with_ingredients.ingredients[0]
+        sauce_mock.get_type.return_value = "SAUCE"
+        sauce_mock.get_name.return_value = "Test Sauce"
+        
+        filling_mock = burger_with_ingredients.ingredients[1]
+        filling_mock.get_type.return_value = "FILLING"
+        filling_mock.get_name.return_value = "Test Filling"
+        
+        # Мокаем get_price для предсказуемой цены
+        burger_with_ingredients.get_price = Mock(return_value=330.0)
+        
+        receipt = burger_with_ingredients.get_receipt()
+        
+        # Ожидаемый чек
+        expected_receipt_lines = [
+            "(==== Test Bun ====)",
+            "= sauce Test Sauce =",
+            "= filling Test Filling =",
+            "(==== Test Bun ====)",
+            "",
+            "Price: 330.0"
+        ]
+        expected_receipt = "\n".join(expected_receipt_lines)
+        
+        # Проверка полного соответствия
+        assert receipt == expected_receipt
+    
+    def test_get_receipt_with_single_ingredient(self, mock_bun, mock_ingredient_sauce):
+        """Тест формирования чека с одним ингредиентом"""
+        # Шаги теста
+        burger = Burger()
+        burger.set_buns(mock_bun)
+        burger.add_ingredient(mock_ingredient_sauce)
+        
+        burger.bun.get_name.return_value = "Single Bun"
+        mock_ingredient_sauce.get_type.return_value = "SAUCE"
+        mock_ingredient_sauce.get_name.return_value = "Single Sauce"
+        
+        # Мокаем get_price
+        burger.get_price = Mock(return_value=250.0)
+        
+        receipt = burger.get_receipt()
+        
+        # Ожидаемый чек
+        expected_receipt_lines = [
+            "(==== Single Bun ====)",
+            "= sauce Single Sauce =",
+            "(==== Single Bun ====)",
+            "",
+            "Price: 250.0"
+        ]
+        expected_receipt = "\n".join(expected_receipt_lines)
+        
+        # Проверка полного соответствия
+        assert receipt == expected_receipt
+    
+    def test_get_receipt_with_no_ingredients(self, mock_bun):
+        """Тест формирования чека без ингредиентов"""
+        # Шаги теста
+        burger = Burger()
+        burger.set_buns(mock_bun)
+        
+        burger.bun.get_name.return_value = "Bun Only"
+        burger.get_price = Mock(return_value=200.0)
+        
+        receipt = burger.get_receipt()
+        
+        # Ожидаемый чек
+        expected_receipt_lines = [
+            "(==== Bun Only ====)",
+            "(==== Bun Only ====)",
+            "",
+            "Price: 200.0"
+        ]
+        expected_receipt = "\n".join(expected_receipt_lines)
+        
+        # Проверка полного соответствия
+        assert receipt == expected_receipt
