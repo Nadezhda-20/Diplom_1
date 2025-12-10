@@ -15,10 +15,10 @@ class TestBun:
     ])
     def test_bun_initialization(self, test_data):
         """Тест инициализации булочки с параметризацией"""
-        # Шаги теста
+      
         bun = Bun(test_data["name"], test_data["price"])
         
-        # Проверки
+       
         assert bun.name == test_data["name"]
         assert bun.price == test_data["price"]
     
@@ -29,10 +29,10 @@ class TestBun:
     ])
     def test_get_name_returns_correct_value(self, test_data):
         """Тест метода get_name с параметризацией"""
-        # Шаги теста
+       
         bun = Bun(test_data["name"], test_data["price"])
         
-        # Проверка
+       
         assert bun.get_name() == test_data["name"]
     
     @pytest.mark.parametrize("test_data", [
@@ -42,8 +42,8 @@ class TestBun:
     ])
     def test_get_price_returns_correct_value(self, test_data):
         """Тест метода get_price с параметризацией"""
-        # Шаги теста
+        
         bun = Bun(test_data["name"], test_data["price"])
         
-        # Проверка
+        
         assert bun.get_price() == test_data["price"]

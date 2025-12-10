@@ -15,10 +15,10 @@ class TestIngredient:
     ])
     def test_ingredient_initialization(self, test_data):
         """Тест инициализации ингредиента с параметризацией"""
-        # Шаги теста
+        
         ingredient = Ingredient(test_data["type"], test_data["name"], test_data["price"])
         
-        # Проверки
+        
         assert ingredient.type == test_data["type"]
         assert ingredient.name == test_data["name"]
         assert ingredient.price == test_data["price"]
@@ -26,10 +26,10 @@ class TestIngredient:
     @pytest.mark.parametrize("price", [100.0, 0.0, 50.5, 999.99])
     def test_get_price_returns_correct_value(self, price):
         """Тест метода get_price с параметризацией"""
-        # Шаги теста
+        
         ingredient = Ingredient("SAUCE", "test", price)
         
-        # Проверка
+       
         assert ingredient.get_price() == price
     
     @pytest.mark.parametrize("test_data", [
@@ -40,17 +40,17 @@ class TestIngredient:
     ])
     def test_get_name_returns_correct_value(self, test_data):
         """Тест метода get_name с параметризацией"""
-        # Шаги теста
+       
         ingredient = Ingredient(test_data["type"], test_data["name"], 100)
         
-        # Проверка
+       
         assert ingredient.get_name() == test_data["name"]
     
     @pytest.mark.parametrize("ingredient_type", ["SAUCE", "FILLING"])
     def test_get_type_returns_correct_value(self, ingredient_type):
         """Тест метода get_type с параметризацией"""
-        # Шаги теста
+    
         ingredient = Ingredient(ingredient_type, "test", 100)
         
-        # Проверка
+       
         assert ingredient.get_type() == ingredient_type
