@@ -1,5 +1,6 @@
 """Тесты для класса Burger"""
 import pytest
+import math
 from unittest.mock import Mock
 from praktikum.burger import Burger
 from tests.test_data import (
@@ -99,8 +100,11 @@ class TestBurger:
         burger.add_ingredient(sauce_mock)
         burger.add_ingredient(filling_mock)
         
-        # Проверка
-        assert burger.get_price() == test_data["expected"]
+        # Проверка с использованием math.isclose для чисел с плавающей точкой
+        calculated_price = burger.get_price()
+        expected_price = test_data["expected"]
+        assert math.isclose(calculated_price, expected_price, rel_tol=1e-9, abs_tol=1e-12), \
+            f"Рассчитанная цена {calculated_price} не равна ожидаемой {expected_price}"
     
     def test_get_price_without_bun_raises_exception(self):
         """Тест расчета цены без установленной булочки"""
