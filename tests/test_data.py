@@ -30,10 +30,11 @@ TEST_INGREDIENTS = [
 ]
 
 # Тестовые данные для проверки цены
+# Исправляем: 50.5 * 2 + 25.25 + 75.75 = 101.0 + 101.0 = 202.0, а не 202.05
 TEST_PRICE_CALCULATIONS = [
     {"bun_price": 100.0, "sauce_price": 50.0, "filling_price": 80.0, "expected": 330.0},
     {"bun_price": 0.0, "sauce_price": 0.0, "filling_price": 0.0, "expected": 0.0},
-    {"bun_price": 50.5, "sauce_price": 25.25, "filling_price": 75.75, "expected": 202.05},
+    {"bun_price": 50.5, "sauce_price": 25.25, "filling_price": 75.75, "expected": 202.0},
 ]
 
 # Тестовые данные для перемещения ингредиентов
