@@ -149,3 +149,38 @@ cat >> tests/test_burger.py << EOF
         else:  # [0, 1]
             assert burger.ingredients[0] == ingredient1
             assert burger.ingredients[1] == ingredient2
+    
+    @pytest.mark.parametrize("bun_price, sauce_price, filling_price, expected_total", [
+        (100.0, 50.0, 80.0, 100.0 * 2 + 50.0 + 80.0),  # Все цены положительные
+        (0.0, 0.0, 0.0, 0.0),  # Все бесплатные
+        (50.5, 25.25, 75.75, 50.5 * 2 + 25.25 + 75.75),  # Дробные цены
+    ])
+    def test_get_price_calculates_correctly(self, bun_price, sauce_price, 
+                                            filling_price, expected_total):
+        """Тест расчета цены бургера с параметризацией"""
+        # Шаги теста
+        burger = Burger()
+        
+        bun_mock = Mock()
+        bun_mock.get_price.return_value = bun_price
+        
+        sauce_mock = Mock()
+        sauce_mock.get_price.return_value = sauce_price
+        
+        filling_mock = Mock()
+        filling_mock.get_price.return_value = filling_price
+        
+        burger.set_buns(bun_mock)
+        burger.add_ingredient(sauce_mock)
+        burger.add_ingredient(filling_mock)
+        
+        # Проверка
+        assert burger.get_price() == expected_total
+    
+    def test_get_price_without_bun_raises_exception(self):
+        """Тест расчета цены без установленной булочки"""
+        # Шаги теста
+        burger = Burger()
+        
+        # Проверка
+        assert burger.bun is None
