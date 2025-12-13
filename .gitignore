@@ -1,58 +1,11 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*.class
-
-# Coverage reports
-.coverage
-.coverage.*
-*.cover
-.hypothesis/
-
-# Virtual environments
-venv/
-env/
-.venv/
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS files
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.log
 .DS_Store
-Thumbs.db
-
-cat > .gitignore << EOF
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*.class
-
-# Coverage reports
-
-.coverage
-.coverage.*
-*.cover
-.hypothesis/
-
-# Virtual environments
+.env
 venv/
-env/
-.venv/
-
-# IDE files
-.vscode/
 .idea/
-*.swp
-*.swo
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Test artifacts
-.pytest_cache/
-htmlcov/
-.coverage
+.vscode/
